@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app: my-website
-  replicas: 2
+  replicas: 20
   template:
     metadata:
       labels:
@@ -26,24 +26,3 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: my-website
-  namespace: my-website
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`my-website.local.j4n-e4t.me`)
-      kind: Rule
-      services:
-        - name: my-website
-          port: 80
-      #middlewares:
-      #  - name: default-headers
-  # tls:
-  #   secretName: local-j4n-e4t-me-production-tls
